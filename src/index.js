@@ -6,7 +6,20 @@ dotenv.config({
   path: "./env",
 });
 
-connectDB();
+const Port = process.env.PORT || 5000;
+
+connectDB()
+  .then(() => {
+    app.on("error", (err) => {
+      console.log("Error Occurred ", err);
+    });
+    app.listen(Port, () => {
+      console.log("Server started on Port", Port);
+    });
+  })
+  .catch((error) => {
+    console.log("Not connected to DB", error);
+  });
 
 // ---------------->First Approach<-------------------//
 /*
